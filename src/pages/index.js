@@ -37,6 +37,7 @@ const WHAT_OPTIONS = [
 ]
 const WHO_OPTIONS = [
   "Families",
+  "Veterans",
   "Immigrants",
   "LGBTQI",
   "Business Owners",
