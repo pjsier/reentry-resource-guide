@@ -39,7 +39,8 @@ const Header = ({ location }) => {
         <Link className="navbar-item" to="/">
           <Img
             fixed={imageData.file.childImageSharp.fixed}
-            style={{ minWidth: imageData.file.childImageSharp.fixed.width }}
+            // TODO: Reenable
+            style={{ minWidth: imageData.file.childImageSharp.fixed.width, display: "none"  }}
             alt={intl.formatMessage({ id: "logo-alt" })}
           />
           <h1>{intl.formatMessage({ id: "site-title" })}</h1>

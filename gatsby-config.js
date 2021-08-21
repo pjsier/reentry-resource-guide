@@ -5,17 +5,6 @@ const siteUrl = process.env.SITE_URL || `https://covid.citybureau.org`
 const languages = [
   `en`,
   `es`,
-  `zh`,
-  `ar`,
-  `pl`,
-  `ur`,
-  `fil`,
-  `vi`,
-  `yo`,
-  `fr`,
-  `bs`,
-  `hi`,
-  `ko`,
 ]
 
 module.exports = {

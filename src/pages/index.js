@@ -8,7 +8,6 @@ import Fuse from "fuse.js"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import IntroBanner from "../components/intro-banner"
 import FilterDescription from "../components/filter-description"
 import ResourceRow from "../components/resource-row"
 import CheckboxGroup from "../components/checkbox-group"
@@ -46,13 +45,6 @@ const WHO_OPTIONS = [
 const LANGUAGE_OPTIONS = [
   "English",
   "Spanish",
-  "Chinese",
-  "Arabic",
-  "Polish",
-  "Urdu",
-  "Tagalog",
-  "Vietnamese",
-  "Gujarati",
 ]
 export const LEVEL_ENUM = {
   State: 1,
@@ -418,7 +410,6 @@ const IndexPage = ({
           <ScrollTopButton />
         </aside>
         <div className="section filter-results-section">
-          <IntroBanner />
           <FilterDescription
             filters={getFiltersWithValues(debounceFilters)}
             count={results.length}
