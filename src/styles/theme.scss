@@ -1,0 +1,45 @@
+// Layout
+
+$maxWidth: 1440px;
+$backgroundColor: #ffffff;
+
+// Grid
+
+@function grid($n) {
+  @return $n * $gridSize;
+}
+$gridSize: 8px;
+
+// Colors
+
+$white: #ffffff;
+$black: #2c2e35;
+$gray: #9b9c9f;
+$backgroundGray: #f4f4f4;
+$blue: #0072bc;
+$darkBlue: #0052af;
+$indigo: #46029f;
+$red: #e81c35;
+$green: #058346;
+$teal: rgba(0, 134, 138, 0.7);
+$yellow: #ffcb05;
+$borderColor: $gray;
+$primaryColor: $blue;
+$primaryLight: #edf5ff;
+$accentColor: $yellow;
+$warningColor: $red;
+$bodyTextColor: $black;
+
+// Borders, shadows
+
+$defaultBorder: solid 1px $borderColor;
+$defaultBoxShadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15);
+
+// Fonts
+
+$fallbackSansSerifFontStack: BlinkMacSystemFont, -apple-system, "Segoe UI",
+  "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+  "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+$sansSerifFontStack: benton-sans, $fallbackSansSerifFontStack;
+$defaultFontStack: $sansSerifFontStack;
+$defaultFontSize: 16px;

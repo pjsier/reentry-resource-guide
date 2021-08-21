@@ -1,0 +1,85 @@
+{
+  "name": "chi-covid-resources",
+  "private": true,
+  "description": "",
+  "version": "0.1.0",
+  "author": "City Bureau",
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-brands-svg-icons": "^5.13.0",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/react-fontawesome": "^0.1.9",
+    "bulma": "^0.8.1",
+    "custom-event-polyfill": "^1.0.7",
+    "dotenv": "^8.2.0",
+    "fuse.js": "^5.1.0",
+    "gatsby": "^2.20.15",
+    "gatsby-image": "^2.2.44",
+    "gatsby-plugin-google-gtag": "^1.2.1",
+    "gatsby-plugin-intl": "^0.3.3",
+    "gatsby-plugin-manifest": "^2.2.48",
+    "gatsby-plugin-offline": "^3.0.41",
+    "gatsby-plugin-react-helmet": "^3.1.24",
+    "gatsby-plugin-remove-serviceworker": "^1.0.0",
+    "gatsby-plugin-robots-txt": "^1.5.0",
+    "gatsby-plugin-sass": "^2.2.1",
+    "gatsby-plugin-sentry": "^1.0.1",
+    "gatsby-plugin-sharp": "^2.4.13",
+    "gatsby-plugin-sitemap": "^2.3.2",
+    "gatsby-plugin-web-font-loader": "^1.0.4",
+    "gatsby-source-airtable": "^2.1.0",
+    "gatsby-source-filesystem": "^2.1.56",
+    "gatsby-transformer-remark": "^2.8.0",
+    "gatsby-transformer-sharp": "^2.3.19",
+    "node-sass": "^4.13.1",
+    "object.fromentries": "^2.0.2",
+    "prop-types": "^15.7.2",
+    "pym.js": "^1.3.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-helmet": "^5.2.1",
+    "react-load-script": "^0.0.6",
+    "smoothscroll-polyfill": "^0.4.4",
+    "url-search-params-polyfill": "^8.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "eslint": "^6.8.0",
+    "eslint-config-react-app": "^5.2.1",
+    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.9",
+    "husky": "^4.2.3",
+    "prettier": "^1.19.1"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "browserslist": [
+    ">0.5%",
+    "ie 11"
+  ],
+  "eslintConfig": {
+    "extends": "react-app",
+    "ignorePatterns": [
+      "node_modules/"
+    ]
+  },
+  "prettier": {
+    "endOfLine": "lf",
+    "semi": false,
+    "singleQuote": false,
+    "tabWidth": 2,
+    "trailingComma": "es5"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS -x @commitlint/config-conventional"
+    }
+  }
+}

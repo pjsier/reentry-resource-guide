@@ -1,0 +1,59 @@
+@import "bulma/sass/utilities/initial-variables.sass";
+@import "bulma/sass/utilities/functions.sass";
+
+$blue: $primaryColor;
+$primary: $blue;
+$info: $accentColor;
+$red: $warningColor;
+$yellow: $accentColor;
+$grey-dark: $bodyTextColor;
+
+$radius: 2px;
+$radius-small: 2px;
+$radius-large: 4px;
+$tag-radius: 2px;
+
+$label-color: $black;
+$input-border-color: $borderColor;
+$input-shadow: none;
+
+$background: $backgroundColor;
+$navbar-height: grid(7);
+$navbar-padding-vertical: 0;
+$navbar-item-color: $black;
+$navbar-breakpoint: $tablet;
+$section-padding: grid(1.5);
+$footer-background-color: transparent;
+
+$family-sans-serif: $defaultFontStack;
+$link-hover: $red;
+
+$mobile: 559px;
+$tablet: 767px;
+$desktop: 1023px;
+$fullhd: 1441px;
+
+@import "bulma/sass/utilities/derived-variables.sass";
+@import "bulma/sass/utilities/animations.sass";
+@import "bulma/sass/utilities/mixins.sass";
+@import "bulma/sass/utilities/controls.sass";
+
+@import "bulma/sass/base/minireset.sass";
+@import "bulma/sass/base/generic.sass";
+@import "bulma/sass/base/helpers.sass";
+
+@import "bulma/sass/elements/button.sass";
+@import "bulma/sass/elements/container.sass";
+@import "bulma/sass/elements/content.sass";
+
+@import "bulma/sass/form/shared.sass";
+@import "bulma/sass/form/input-textarea.sass";
+
+@import "bulma/sass/components/dropdown.sass";
+@import "bulma/sass/components/modal.sass";
+@import "bulma/sass/components/navbar.sass";
+
+@import "bulma/sass/grid/columns.sass";
+
+@import "bulma/sass/layout/section.sass";
+@import "bulma/sass/layout/footer.sass";

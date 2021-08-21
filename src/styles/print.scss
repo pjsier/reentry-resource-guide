@@ -1,0 +1,90 @@
+@media print {
+  .navbar-burger,
+  .navbar-menu,
+  .footer,
+  .filter-controls,
+  .filter-results-footer,
+  .flag-resource,
+  .delete {
+    display: none !important;
+  }
+
+  .navbar {
+    box-shadow: none;
+  }
+
+  body,
+  .navbar,
+  .intro-banner,
+  .resource-row:nth-child(odd),
+  .tag {
+    background-color: transparent !important;
+  }
+
+  .intro-banner {
+    padding-bottom: 0;
+  }
+
+  body,
+  main.main {
+    min-height: 0;
+  }
+
+  .navbar-brand > a.navbar-item {
+    padding-left: 0;
+  }
+
+  .resource-row,
+  .resource-row .column,
+  .intro-banner,
+  .filter-description,
+  .tag,
+  .main.containe {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .main.container article {
+    max-width: 100%;
+  }
+
+  a {
+    color: #000 !important;
+  }
+
+  .resource-row {
+    // Eliminated most padding but add to description column for legibility
+    .column:first-child {
+      padding-right: grid(2);
+    }
+
+    .detail-column {
+      a.website {
+        color: transparent !important;
+
+        &::before {
+          content: attr(href);
+          overflow-wrap: anywhere;
+          color: #000;
+        }
+      }
+    }
+  }
+
+  html,
+  body,
+  .section,
+  .container,
+  .columns,
+  .filter-container,
+  .filter-header {
+    overflow: visible;
+    display: block;
+    color: #000 !important;
+  }
+
+  // Show commas between tag items for legibility
+  .tag:not(:last-child)::after {
+    content: ", ";
+  }
+}
