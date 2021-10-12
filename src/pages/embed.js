@@ -145,17 +145,10 @@ export const query = graphql`
             name: Name
             link: Link
             phone: Phone
-            email: Email
-            hours: Hours
             address: Address
             zip: ZIP
             description: Description
-            descriptiones: Description_ES
-            who: Who
-            what: Category
             languages: Languages
-            qualifications: Qualifications
-            level: Level
             lastUpdated: Last_Updated
           }
         }

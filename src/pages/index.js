@@ -43,10 +43,7 @@ const WHO_OPTIONS = [
   "Business Owners",
   "Students",
 ]
-const LANGUAGE_OPTIONS = [
-  "English",
-  "Spanish",
-]
+const LANGUAGE_OPTIONS = ["English", "Spanish"]
 export const LEVEL_ENUM = {
   State: 1,
   County: 2,
@@ -448,6 +445,7 @@ IndexPage.propTypes = {
   data: PropTypes.object.isRequired,
 }
 
+// TODO: Re-add email, hours, description_es, qualifications, level
 export const query = graphql`
   query {
     site {
@@ -463,17 +461,12 @@ export const query = graphql`
             name: Name
             link: Link
             phone: Phone
-            email: Email
-            hours: Hours
             address: Address
             zip: ZIP
             description: Description
-            descriptiones: Description_ES
-            who: Who
-            what: Category
+            who: Special_Population_Served
+            what: Primary_Category_ies
             languages: Languages
-            qualifications: Qualifications
-            level: Level
             lastUpdated: Last_Updated
           }
         }

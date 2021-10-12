@@ -279,6 +279,11 @@ a.navbar-item {
   background-color: $backgroundGray;
   padding: grid(6) grid(3) grid(12);
 
+  .content {
+    max-width: $maxWidth;
+    margin: auto;
+  }
+
   .columns {
     margin: 0;
   }
@@ -394,6 +399,16 @@ html[lang="yo"] {
   body {
     font-family: $fallbackSansSerifFontStack;
   }
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 @import "filters.scss";
