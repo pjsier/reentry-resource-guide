@@ -40,7 +40,10 @@ const Header = ({ location }) => {
           <Img
             fixed={imageData.file.childImageSharp.fixed}
             // TODO: Reenable
-            style={{ minWidth: imageData.file.childImageSharp.fixed.width, display: "none"  }}
+            style={{
+              minWidth: imageData.file.childImageSharp.fixed.width,
+              display: "none",
+            }}
             alt={intl.formatMessage({ id: "logo-alt" })}
           />
           <h1>{intl.formatMessage({ id: "site-title" })}</h1>
@@ -72,9 +75,6 @@ const Header = ({ location }) => {
         className={`navbar-menu ${expanded === "true" ? `is-active` : ``}`}
       >
         <div className="navbar-end">
-          <Link className="navbar-item" to="/about">
-            {intl.formatMessage({ id: "about" })}
-          </Link>
           <button
             className="navbar-item button print-button is-text"
             onClick={onPrint}

@@ -1,18 +1,15 @@
 require(`dotenv`).config()
 
-const siteUrl = process.env.SITE_URL || `https://covid.citybureau.org`
+const siteUrl = process.env.SITE_URL || `https://guide.reentryillinois.net`
 
-const languages = [
-  `en`,
-  `es`,
-]
+const languages = [`en`, `es`]
 
 module.exports = {
   siteMetadata: {
-    title: `Chicago COVID Resources`,
+    title: `Illinois Re-Entry Resources`,
     siteUrl,
-    author: `City Bureau`,
-    twitterAuthor: `@city_bureau`,
+    author: `Education Justice Project`,
+    twitterAuthor: ``,
     defaultLanguage: `en`,
     reportErrorPath: process.env.REPORT_ERROR_PATH,
   },
@@ -49,26 +46,26 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-transformer-remark`,
     `gatsby-plugin-sharp`,
-    {
-      resolve: `gatsby-plugin-web-font-loader`,
-      options: {
-        typekit: {
-          id: `pbz7tnn`,
-        },
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-gtag`,
-      options: {
-        trackingIds: [`UA-68381272-7`],
-        gtagConfig: {
-          anonymize_ip: true,
-        },
-        pluginConfig: {
-          respectDNT: true,
-        },
-      },
-    },
+    // {
+    //   resolve: `gatsby-plugin-web-font-loader`,
+    //   options: {
+    //     typekit: {
+    //       id: `pbz7tnn`,
+    //     },
+    //   },
+    // },
+    // {
+    //   resolve: `gatsby-plugin-google-gtag`,
+    //   options: {
+    //     trackingIds: [`UA-68381272-7`],
+    //     gtagConfig: {
+    //       anonymize_ip: true,
+    //     },
+    //     pluginConfig: {
+    //       respectDNT: true,
+    //     },
+    //   },
+    // },
     {
       resolve: `gatsby-source-airtable`,
       options: {
@@ -86,8 +83,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `COVID Resource Finder`,
-        short_name: `COVID Resources`,
+        name: `Illinois Re-Entry Resource Guide`,
+        short_name: `Re-Entry Resources`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#ffffff`,

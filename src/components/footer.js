@@ -35,9 +35,6 @@ const Footer = ({ location, intl }) => (
                 <Link to="/">{intl.formatMessage({ id: "home" })}</Link>
               </p>
               <p>
-                <Link to="/about/">{intl.formatMessage({ id: "about" })}</Link>
-              </p>
-              <p>
                 <Link to="/suggest-resource/">
                   {intl.formatMessage({ id: "suggest-resource" })}
                 </Link>
