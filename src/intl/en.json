@@ -1,5 +1,4 @@
 {
-  "city-bureau": "City Bureau",
   "meta-title": "Illinois Re-Entry Resources",
   "site-title": "Illinois Re-Entry Resources",
   "site-description": "Find verified, updated info on food, legal help, housing, etc. during the coronavirus pandemic. Created by City Bureau, a nonprofit newsroom.",
@@ -16,7 +15,7 @@
   "suggest-resource-intro-alt-form": "If you'd like to offer general feedback, please use {thisFormLink} instead.",
   "feedback": "Feedback",
   "feedback-form-id": "shrqm1FReY562DsN1",
-  "feedback-intro": "We loves feedback. Let us know what you think and help us make this site better.",
+  "feedback-intro": "We love feedback. Let us know what you think and help us make this site better.",
   "feedback-intro-alt-form": "If you'd like to suggest a resource to be added to this site, please use {thisFormLink} instead.",
   "filter-title": "Filter resources",
   "intro-description": "Updated, verified info—created by {cityBureauLink}, a nonprofit newsroom based in Chicago. Text \"covid\" to 312-436-2280 to access via phone.",

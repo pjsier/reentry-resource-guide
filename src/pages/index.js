@@ -26,23 +26,6 @@ import ZIP_MAP from "../data/zip-map.json"
 
 export const PAGE_SIZE = 10
 
-const WHAT_OPTIONS = [
-  "Money",
-  "Food",
-  "Housing",
-  "Health",
-  "Mental Health",
-  "Utilities",
-  "Legal Help",
-]
-const WHO_OPTIONS = [
-  "Families",
-  "Veterans",
-  "Immigrants",
-  "LGBTQI",
-  "Business Owners",
-  "Students",
-]
 const LANGUAGE_OPTIONS = ["English", "Spanish"]
 export const LEVEL_ENUM = {
   State: 1,
@@ -211,7 +194,7 @@ const IndexPage = ({
     site: {
       siteMetadata: { reportErrorPath },
     },
-    allAirtable: { edges },
+    allAirtable: { whoOptions, whatOptions, edges },
   },
 }) => {
   const defaultFilters = {
@@ -355,7 +338,7 @@ const IndexPage = ({
             <CheckboxGroup
               name="what"
               label={intl.formatMessage({ id: "what-label" })}
-              options={translateOptions(WHAT_OPTIONS)}
+              options={translateOptions(whatOptions)}
               value={filters.what}
               onChange={what => setFilters({ ...filters, what })}
               classNames="filter-group"
@@ -379,7 +362,7 @@ const IndexPage = ({
               name="who"
               label={intl.formatMessage({ id: "who-label" })}
               help={intl.formatMessage({ id: "who-help" })}
-              options={translateOptions(WHO_OPTIONS)}
+              options={translateOptions(whoOptions)}
               value={filters.who}
               onChange={who => setFilters({ ...filters, who })}
               classNames="filter-group"
@@ -454,6 +437,8 @@ export const query = graphql`
       }
     }
     allAirtable {
+      whatOptions: distinct(field: data___Primary_Category_ies)
+      whoOptions: distinct(field: data___Special_Population_Served)
       edges {
         node {
           recordId

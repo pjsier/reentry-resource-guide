@@ -112,7 +112,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {
-        exclude: [`/embed*`],
+        exclude: [`/embed*`, `/about`],
         query: `
         {
           site {
