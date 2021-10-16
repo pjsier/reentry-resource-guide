@@ -26,7 +26,6 @@ import ZIP_MAP from "../data/zip-map.json"
 
 export const PAGE_SIZE = 10
 
-const LANGUAGE_OPTIONS = ["English", "Spanish"]
 export const LEVEL_ENUM = {
   State: 1,
   County: 2,
@@ -93,14 +92,7 @@ export const applyFilters = (filters, data) => {
       shouldSort: true,
       threshold: 0.3,
       distance: 500,
-      keys: [
-        `name`,
-        `description`,
-        `descriptiones`,
-        `who`,
-        `what`,
-        `languages`,
-      ],
+      keys: [`name`, `description`, `descriptiones`, `who`, `what`],
     })
       .search(filters.search.trim())
       .map(({ item }) => item)
@@ -145,8 +137,8 @@ const updateQueryParams = (filters, removeKeys) => {
   document.dispatchEvent(event)
 }
 
-const sendGaQueryParams = ({ search, what, who, languages, zip }) => {
-  const filters = [what, who, languages, zip]
+const sendGaQueryParams = ({ search, what, who, zip }) => {
+  const filters = [what, who, zip]
     .reduce((acc, val) => acc.concat(val), [])
     .filter(v => !!v)
   if (
@@ -202,7 +194,6 @@ const IndexPage = ({
     zip: ``,
     who: [],
     what: [],
-    languages: [],
   }
   const allResults = useMemo(
     () =>
@@ -225,7 +216,6 @@ const IndexPage = ({
       debounceFilters.zip,
       debounceFilters.what,
       debounceFilters.who,
-      debounceFilters.languages,
     ]
   )
   const [expanded, setExpanded] = useState(false)
@@ -254,7 +244,6 @@ const IndexPage = ({
       `zip`,
       `what`,
       `who`,
-      `languages`,
     ])
     sendGaQueryParams(debounceFilters)
     if (page !== 1) setPage(1)
@@ -264,7 +253,6 @@ const IndexPage = ({
     debounceFilters.zip,
     debounceFilters.what,
     debounceFilters.who,
-    debounceFilters.languages,
   ])
 
   useEffect(() => {
@@ -367,14 +355,6 @@ const IndexPage = ({
               onChange={who => setFilters({ ...filters, who })}
               classNames="filter-group"
             />
-            <CheckboxGroup
-              name="languages"
-              label={intl.formatMessage({ id: "languages-label" })}
-              options={translateOptions(LANGUAGE_OPTIONS)}
-              value={filters.languages}
-              onChange={languages => setFilters({ ...filters, languages })}
-              classNames="filter-group"
-            />
             <button
               className={`button is-info clear-filters ${
                 Object.entries(getFiltersWithValues(debounceFilters)).length ===
@@ -428,7 +408,7 @@ IndexPage.propTypes = {
   data: PropTypes.object.isRequired,
 }
 
-// TODO: Re-add email, hours, description_es, qualifications, level
+// TODO: Re-add email, hours, description_es, qualifications, level, languages
 export const query = graphql`
   query {
     site {
@@ -451,7 +431,6 @@ export const query = graphql`
             description: Description
             who: Special_Population_Served
             what: Primary_Category_ies
-            languages: Languages
             lastUpdated: Last_Updated
           }
         }

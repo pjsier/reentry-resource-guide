@@ -45,16 +45,7 @@ const Footer = ({ location, intl }) => (
                 </Link>
               </p>
             </div>
-            <div className="column">
-              <p>
-                <a
-                  href="https://www.citybureau.org/"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  {intl.formatMessage({ id: "city-bureau" })}
-                </a>
-              </p>
+            {/* <div className="column">
               <div className="social-icons">
                 <a
                   href="https://facebook.com/citybureau"
@@ -84,7 +75,7 @@ const Footer = ({ location, intl }) => (
                   <FontAwesomeIcon icon={["fab", "twitter"]} />
                 </a>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </footer>
