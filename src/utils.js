@@ -20,6 +20,21 @@ export const fromEntries = iterable => {
   })
 }
 
+export function injectScript(src) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script")
+    script.src = src
+    script.type = "text/javascript"
+    script.async = true
+    script.defer = true
+
+    script.addEventListener("load", resolve, { once: true })
+    script.addEventListener("error", reject, { once: true })
+
+    document.body.appendChild(script)
+  })
+}
+
 /* eslint-disable */
 // Debounce function from underscore
 export const debounce = (func, wait, immediate) => {

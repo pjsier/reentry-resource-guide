@@ -7,7 +7,9 @@ import { rtlLanguages } from "../constants"
 const FilterDescription = ({ filters, count }) => {
   const intl = useIntl()
   const filterText = Object.entries(filters)
+    .filter(([key, value]) => key !== `coords`)
     .map(([key, value]) => {
+      console.log(key, value)
       if (key === `search`) {
         return `"${value}"`
       } else {

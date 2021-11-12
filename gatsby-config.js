@@ -11,6 +11,7 @@ module.exports = {
     author: `Education Justice Project`,
     twitterAuthor: ``,
     defaultLanguage: `en`,
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
     reportErrorPath: process.env.REPORT_ERROR_PATH,
   },
   plugins: [

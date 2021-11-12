@@ -12,6 +12,7 @@ import FilterDescription from "../components/filter-description"
 import ResourceRow from "../components/resource-row"
 import CheckboxGroup from "../components/checkbox-group"
 import DebouncedInput from "../components/debounced-input"
+import GeocoderInput from "../components/geocoder-input"
 import ScrollTopButton from "../components/scroll-top-button"
 import ToastMessage from "../components/toast-message"
 import ReportErrorModal from "../components/report-error-modal"
@@ -63,6 +64,9 @@ export const applyFilters = (filters, data) => {
       // Ignore search, apply afterwards to save time
       if (key === `search`) {
         return true
+      }
+      if (key === `coords`) {
+        // Similar logic to zip
       }
       if (key === `zip` && value.replace(/\D/g, ``) in ZIP_MAP) {
         const zipVal = value.replace(/\D/g, ``)
@@ -184,14 +188,14 @@ const IndexPage = ({
   location,
   data: {
     site: {
-      siteMetadata: { reportErrorPath },
+      siteMetadata: { reportErrorPath, googleMapsApiKey },
     },
     allAirtable: { whoOptions, whatOptions, edges },
   },
 }) => {
   const defaultFilters = {
     search: ``,
-    zip: ``,
+    coords: [],
     who: [],
     what: [],
   }
@@ -213,7 +217,7 @@ const IndexPage = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       debounceFilters.search,
-      debounceFilters.zip,
+      debounceFilters.coords,
       debounceFilters.what,
       debounceFilters.who,
     ]
@@ -241,7 +245,7 @@ const IndexPage = ({
   useEffect(() => {
     updateQueryParams(getFiltersWithValues(debounceFilters), [
       `search`,
-      `zip`,
+      `coords`,
       `what`,
       `who`,
     ])
@@ -250,7 +254,7 @@ const IndexPage = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     debounceFilters.search,
-    debounceFilters.zip,
+    debounceFilters.coords,
     debounceFilters.what,
     debounceFilters.who,
   ])
@@ -332,18 +336,19 @@ const IndexPage = ({
               classNames="filter-group"
             />
             <div className="filter-group">
-              <label className="label" htmlFor="zip-search">
+              <label className="label" htmlFor="address-search">
                 {intl.formatMessage({ id: "where-label" })}
               </label>
-              <DebouncedInput
-                name="zip"
-                id="zip-search"
-                inputType="number"
-                value={filters.zip}
-                placeholder={intl.formatMessage({
-                  id: "zip-placeholder",
-                })}
-                onChange={zip => setFilters({ ...filters, zip })}
+              <GeocoderInput
+                id="address-search"
+                name="address"
+                placeholder={intl.formatMessage({ id: "address-placeholder" })}
+                googleMapsApiKey={googleMapsApiKey}
+                onChange={({ lat, lon }) => {
+                  if (lat && lon) {
+                    setFilters({ ...filters, coords: [lon, lat] })
+                  }
+                }}
               />
             </div>
             <CheckboxGroup
@@ -413,6 +418,7 @@ export const query = graphql`
   query {
     site {
       siteMetadata {
+        googleMapsApiKey
         reportErrorPath
       }
     }
