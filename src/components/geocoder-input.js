@@ -56,9 +56,6 @@ const GeocoderInput = ({
 
   useEffect(() => {
     setLocalValue(value)
-    if (!value.trim()) {
-      onChange({})
-    }
   }, [value, onChange])
 
   return (

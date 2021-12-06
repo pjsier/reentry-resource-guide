@@ -53,3 +53,29 @@ export const debounce = (func, wait, immediate) => {
   }
 }
 /* eslint-enable */
+
+// Based on https://gist.github.com/SimonJThompson/c9d01f0feeb95b18c7b0
+function toRad(v) {
+  return (v * Math.PI) / 180
+}
+function kmToMiles(km) {
+  return (km * 0.62137).toFixed(2)
+}
+
+// Points are objects with the properties lat and lon
+export function haversine([lon1, lat1], [lon2, lat2]) {
+  const R = 6371 // km
+  const x1 = lat2 - lat1
+  const dLat = toRad(x1)
+  const x2 = lon2 - lon1
+  const dLon = toRad(x2)
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(lat1)) *
+      Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2)
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+  const d = R * c
+  return +kmToMiles(d)
+}

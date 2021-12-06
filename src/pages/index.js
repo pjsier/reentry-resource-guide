@@ -17,7 +17,7 @@ import ScrollTopButton from "../components/scroll-top-button"
 import ToastMessage from "../components/toast-message"
 import ReportErrorModal from "../components/report-error-modal"
 
-import { objectFromSearchParams } from "../utils"
+import { objectFromSearchParams, haversine } from "../utils"
 import { useDebounce } from "../hooks"
 import { DEFAULT_DEBOUNCE } from "../constants"
 // Array of ZIP codes for resources that should be checked for city-level resources
@@ -59,14 +59,20 @@ export const getFiltersWithValues = filters =>
   )
 
 export const applyFilters = (filters, data) => {
+  const filterEntries = Object.entries(filters).filter(f => f[0] !== "address")
   const filtered = data.filter(d =>
-    Object.entries(filters).every(([key, value]) => {
+    filterEntries.every(([key, value]) => {
       // Ignore search, apply afterwards to save time
       if (key === `search`) {
         return true
       }
       if (key === `coords`) {
-        // Similar logic to zip
+        // TODO: Check type of location, base distance filter on that
+        const distanceInMiles = haversine(
+          filters.coords.map(c => +c),
+          [d.longitude, d.latitude]
+        )
+        return distanceInMiles < 2
       }
       if (key === `zip` && value.replace(/\D/g, ``) in ZIP_MAP) {
         const zipVal = value.replace(/\D/g, ``)
@@ -96,7 +102,7 @@ export const applyFilters = (filters, data) => {
       shouldSort: true,
       threshold: 0.3,
       distance: 500,
-      keys: [`name`, `description`, `descriptiones`, `who`, `what`],
+      keys: [`name`, `description`, `descriptiones`, `what`],
     })
       .search(filters.search.trim())
       .map(({ item }) => item)
@@ -141,8 +147,8 @@ const updateQueryParams = (filters, removeKeys) => {
   document.dispatchEvent(event)
 }
 
-const sendGaQueryParams = ({ search, what, who, zip }) => {
-  const filters = [what, who, zip]
+const sendGaQueryParams = ({ search, what, zip }) => {
+  const filters = [what, zip]
     .reduce((acc, val) => acc.concat(val), [])
     .filter(v => !!v)
   if (
@@ -190,13 +196,13 @@ const IndexPage = ({
     site: {
       siteMetadata: { reportErrorPath, googleMapsApiKey },
     },
-    allAirtable: { whoOptions, whatOptions, edges },
+    allAirtable: { whatOptions, edges },
   },
 }) => {
   const defaultFilters = {
     search: ``,
+    address: ``,
     coords: [],
-    who: [],
     what: [],
   }
   const allResults = useMemo(
@@ -217,9 +223,9 @@ const IndexPage = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       debounceFilters.search,
-      debounceFilters.coords,
       debounceFilters.what,
-      debounceFilters.who,
+      debounceFilters.address,
+      debounceFilters.coords,
     ]
   )
   const [expanded, setExpanded] = useState(false)
@@ -245,9 +251,10 @@ const IndexPage = ({
   useEffect(() => {
     updateQueryParams(getFiltersWithValues(debounceFilters), [
       `search`,
+      `address`,
       `coords`,
       `what`,
-      `who`,
+      // `who`,
     ])
     sendGaQueryParams(debounceFilters)
     if (page !== 1) setPage(1)
@@ -256,7 +263,7 @@ const IndexPage = ({
     debounceFilters.search,
     debounceFilters.coords,
     debounceFilters.what,
-    debounceFilters.who,
+    // debounceFilters.who,
   ])
 
   useEffect(() => {
@@ -342,16 +349,15 @@ const IndexPage = ({
               <GeocoderInput
                 id="address-search"
                 name="address"
+                value={filters.address}
                 placeholder={intl.formatMessage({ id: "address-placeholder" })}
                 googleMapsApiKey={googleMapsApiKey}
-                onChange={({ lat, lon }) => {
-                  if (lat && lon) {
-                    setFilters({ ...filters, coords: [lon, lat] })
-                  }
-                }}
+                onChange={({ address, lat, lon }) =>
+                  setFilters({ ...filters, address, coords: [lon, lat] })
+                }
               />
             </div>
-            <CheckboxGroup
+            {/* <CheckboxGroup
               name="who"
               label={intl.formatMessage({ id: "who-label" })}
               help={intl.formatMessage({ id: "who-help" })}
@@ -359,7 +365,7 @@ const IndexPage = ({
               value={filters.who}
               onChange={who => setFilters({ ...filters, who })}
               classNames="filter-group"
-            />
+            /> */}
             <button
               className={`button is-info clear-filters ${
                 Object.entries(getFiltersWithValues(debounceFilters)).length ===
@@ -424,7 +430,6 @@ export const query = graphql`
     }
     allAirtable {
       whatOptions: distinct(field: data___Primary_Category_ies)
-      whoOptions: distinct(field: data___Special_Population_Served)
       edges {
         node {
           recordId
@@ -435,9 +440,10 @@ export const query = graphql`
             address: Address
             zip: ZIP
             description: Description
-            who: Special_Population_Served
             what: Primary_Category_ies
             lastUpdated: Last_Updated
+            latitude: Latitude
+            longitude: Longitude
           }
         }
       }
