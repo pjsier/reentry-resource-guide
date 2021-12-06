@@ -334,14 +334,6 @@ const IndexPage = ({
               />
               <FontAwesomeIcon icon="search" />
             </div>
-            <CheckboxGroup
-              name="what"
-              label={intl.formatMessage({ id: "what-label" })}
-              options={translateOptions(whatOptions)}
-              value={filters.what}
-              onChange={what => setFilters({ ...filters, what })}
-              classNames="filter-group"
-            />
             <div className="filter-group">
               <label className="label" htmlFor="address-search">
                 {intl.formatMessage({ id: "where-label" })}
@@ -357,6 +349,14 @@ const IndexPage = ({
                 }
               />
             </div>
+            <CheckboxGroup
+              name="what"
+              label={intl.formatMessage({ id: "what-label" })}
+              options={translateOptions(whatOptions)}
+              value={filters.what}
+              onChange={what => setFilters({ ...filters, what })}
+              classNames="filter-group"
+            />
             {/* <CheckboxGroup
               name="who"
               label={intl.formatMessage({ id: "who-label" })}
