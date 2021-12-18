@@ -58,21 +58,22 @@ export const getFiltersWithValues = filters =>
     )
   )
 
-export const applyFilters = (filters, data) => {
-  const filterEntries = Object.entries(filters).filter(f => f[0] !== "address")
+// TODO: Improve this for checking distance
+const getFilterDistance = address => (address.includes("Chicago, IL") ? 2 : 15)
+
+export const applyFilters = ({ address, ...filters }, data) => {
   const filtered = data.filter(d =>
-    filterEntries.every(([key, value]) => {
+    Object.entries(filters).every(([key, value]) => {
       // Ignore search, apply afterwards to save time
       if (key === `search`) {
         return true
       }
       if (key === `coords`) {
-        // TODO: Check type of location, base distance filter on that
         const distanceInMiles = haversine(
           filters.coords.map(c => +c),
           [d.longitude, d.latitude]
         )
-        return distanceInMiles < 2
+        return distanceInMiles < getFilterDistance(address)
       }
       if (key === `zip` && value.replace(/\D/g, ``) in ZIP_MAP) {
         const zipVal = value.replace(/\D/g, ``)
@@ -437,7 +438,7 @@ export const query = graphql`
             name: Name
             link: Link
             phone: Phone
-            address: Address
+            address: FullAddress
             zip: ZIP
             description: Description
             what: Primary_Category_ies

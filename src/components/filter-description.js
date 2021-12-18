@@ -9,7 +9,6 @@ const FilterDescription = ({ filters, count }) => {
   const filterText = Object.entries(filters)
     .filter(([key, value]) => key !== `coords`)
     .map(([key, value]) => {
-      console.log(key, value)
       if (key === `search`) {
         return `"${value}"`
       } else {
@@ -38,7 +37,9 @@ const FilterDescription = ({ filters, count }) => {
   }
   return (
     <div className="filter-description">
-      <h2>{intl.formatMessage({ id: messageId }, params)}</h2>
+      <h2 aria-live="polite">
+        {intl.formatMessage({ id: messageId }, params)}
+      </h2>
     </div>
   )
 }

@@ -89,7 +89,7 @@ const ResourceRow = ({
               className="website"
             >
               <FontAwesomeIcon icon="external-link-alt" />
-              &nbsp; <span class="visually-hidden">{name}</span>{" "}
+              &nbsp; <span className="visually-hidden">{name}</span>{" "}
               <span>{intl.formatMessage({ id: "website" })}</span>
             </OutboundLink>
           </p>
