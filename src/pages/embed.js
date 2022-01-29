@@ -148,7 +148,6 @@ export const query = graphql`
             address: Address
             zip: ZIP
             description: Description
-            languages: Languages
             lastUpdated: Last_Updated
           }
         }
