@@ -24,10 +24,9 @@ jobs:
 
       - run: npm ci --prefer-offline --no-audit --no-optional
 
-      - name: Build and deploy
-        uses: JamesIves/github-pages-deploy-action@v4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: public
-          BUILD_SCRIPT: npm run build
+      - run: npm run build
+
+      - uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: public
