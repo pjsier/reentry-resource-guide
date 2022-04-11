@@ -4,7 +4,7 @@ import { graphql } from "gatsby"
 import { useIntl } from "gatsby-plugin-intl"
 import fromEntries from "object.fromentries"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Fuse from "fuse.js"
+import Fuse from "fuse.js/dist/fuse.basic.esm"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
