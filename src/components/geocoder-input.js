@@ -68,7 +68,7 @@ const GeocoderInput = ({
       className={`input ${classNames}`}
       type={inputType}
       placeholder={placeholder}
-      onChange={e => setLocalValue(e.target.value)}
+      onChange={(e) => setLocalValue(e.target.value)}
     />
   )
 }

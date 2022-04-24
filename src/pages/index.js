@@ -4,7 +4,6 @@ import { graphql } from "gatsby"
 import { useIntl } from "gatsby-plugin-intl"
 import fromEntries from "object.fromentries"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Fuse from "fuse.js/dist/fuse.basic.esm"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -17,113 +16,15 @@ import ScrollTopButton from "../components/scroll-top-button"
 import ToastMessage from "../components/toast-message"
 import ReportErrorModal from "../components/report-error-modal"
 
-import { objectFromSearchParams, haversine } from "../utils"
+import {
+  applyFilters,
+  loadQueryParamFilters,
+  objectFromSearchParams,
+  sortByLevel,
+  getFiltersWithValues,
+} from "../utils"
 import { useDebounce } from "../hooks"
-import { DEFAULT_DEBOUNCE } from "../constants"
-// Array of ZIP codes for resources that should be checked for city-level resources
-import CITY_ZIPS from "../data/city-zips.json"
-// Mapping of ZIP codes to arrays of ZIP codes they overlap for proximity search
-import ZIP_MAP from "../data/zip-map.json"
-
-export const PAGE_SIZE = 10
-
-export const LEVEL_ENUM = {
-  State: 1,
-  County: 2,
-  City: 3,
-  Neighborhood: 4,
-  National: 5,
-}
-const ZIP_LEVEL_ENUM = {
-  Neighborhood: 1,
-  City: 2,
-  County: 3,
-  State: 4,
-  National: 5,
-}
-
-export const sortByLevel = levelEnum => (a, b) => {
-  // Sort first by level, but if that's equal prioritize resources without restrictions
-  const levelSort = (levelEnum[a.level] || 10) - (levelEnum[b.level] || 10)
-  return levelSort === 0
-    ? (a.who || []).length - (b.who || []).length
-    : levelSort
-}
-
-export const getFiltersWithValues = filters =>
-  fromEntries(
-    Object.entries(filters).filter(
-      ([key, value]) =>
-        !(Array.isArray(value) && value.length === 0) && value !== ``
-    )
-  )
-
-// TODO: Improve this for checking distance
-const getFilterDistance = address => (address.includes("Chicago, IL") ? 2 : 15)
-
-export const applyFilters = ({ address, ...filters }, data) => {
-  const filtered = data.filter(d =>
-    Object.entries(filters).every(([key, value]) => {
-      // Ignore search, apply afterwards to save time
-      if (key === `search`) {
-        return true
-      }
-      if (key === `coords`) {
-        const distanceInMiles = haversine(
-          filters.coords.map(c => +c),
-          [d.longitude, d.latitude]
-        )
-        return distanceInMiles < getFilterDistance(address)
-      }
-      if (key === `zip` && value.replace(/\D/g, ``) in ZIP_MAP) {
-        const zipVal = value.replace(/\D/g, ``)
-        // Filter out Neighborhood resources if ZIP filtered
-        // Remove City resources if ZIP outside city
-        return (
-          !["City", "Neighborhood"].includes(d.level) ||
-          (d.level === "City" && CITY_ZIPS.includes(zipVal)) ||
-          (!!d[key] &&
-            d.level === "Neighborhood" &&
-            ZIP_MAP[zipVal].some(z => d[key].includes(z)))
-        )
-      } else if (Array.isArray(value)) {
-        // If data value is array, check for overlap
-        return Array.isArray(d[key])
-          ? d[key].some(v => value.includes(v))
-          : value.includes(d[key])
-      } else if (typeof value === `string`) {
-        return (d[key] || ``).toLowerCase().includes(value.toLowerCase().trim())
-      }
-      return true
-    })
-  )
-  if (filters.search?.trim()) {
-    return new Fuse(filtered, {
-      minMatchCharLength: 3,
-      shouldSort: true,
-      threshold: 0.3,
-      distance: 500,
-      keys: [`name`, `description`, `descriptiones`, `what`],
-    })
-      .search(filters.search.trim())
-      .map(({ item }) => item)
-  } else if (!!filters.zip) {
-    return filtered.sort(sortByLevel(ZIP_LEVEL_ENUM))
-  } else {
-    return filtered
-  }
-}
-
-export const loadQueryParamFilters = (location, filters) =>
-  fromEntries(
-    Object.entries(objectFromSearchParams(new URLSearchParams(location.search)))
-      .filter(([key, value]) => value !== "" && key in filters)
-      // Ignore non-numbers in initial ZIP query params
-      .filter(([key, value]) => key !== `zip` || !!value.replace(/\D/g, ""))
-      .map(([key, value]) =>
-        Array.isArray(filters[key]) ? [key, value.split(",")] : [key, value]
-      )
-  )
+import { PAGE_SIZE, LEVEL_ENUM, DEFAULT_DEBOUNCE } from "../constants"
 
 const updateQueryParams = (filters, removeKeys) => {
   // Retain query params not included in the params we're updating
@@ -151,7 +52,7 @@ const updateQueryParams = (filters, removeKeys) => {
 const sendGaQueryParams = ({ search, what, zip }) => {
   const filters = [what, zip]
     .reduce((acc, val) => acc.concat(val), [])
-    .filter(v => !!v)
+    .filter((v) => !!v)
   if (
     typeof window !== "undefined" &&
     window.gtag &&
@@ -175,7 +76,7 @@ const sendGaQueryParams = ({ search, what, zip }) => {
   }
 }
 
-const sendGaNextPage = page => {
+const sendGaNextPage = (page) => {
   if (
     page > 1 &&
     typeof window !== "undefined" &&
@@ -235,8 +136,11 @@ const IndexPage = ({
   const [toast, setToast] = useState(``)
   const intl = useIntl()
 
-  const translateOptions = options =>
-    options.map(value => ({ value, label: intl.formatMessage({ id: value }) }))
+  const translateOptions = (options) =>
+    options.map((value) => ({
+      value,
+      label: intl.formatMessage({ id: value }),
+    }))
 
   useEffect(() => {
     // Set initial filters from URL params if present
@@ -331,7 +235,7 @@ const IndexPage = ({
                 value={filters.search}
                 label={intl.formatMessage({ id: "search-label" })}
                 placeholder={intl.formatMessage({ id: "search-label" })}
-                onChange={search => setFilters({ ...filters, search })}
+                onChange={(search) => setFilters({ ...filters, search })}
               />
               <FontAwesomeIcon icon="search" />
             </div>
@@ -355,7 +259,7 @@ const IndexPage = ({
               label={intl.formatMessage({ id: "what-label" })}
               options={translateOptions(whatOptions)}
               value={filters.what}
-              onChange={what => setFilters({ ...filters, what })}
+              onChange={(what) => setFilters({ ...filters, what })}
               classNames="filter-group"
             />
             {/* <CheckboxGroup
@@ -388,7 +292,7 @@ const IndexPage = ({
             count={results.length}
           />
           <div className="filter-results">
-            {results.slice(0, page * PAGE_SIZE).map(result => (
+            {results.slice(0, page * PAGE_SIZE).map((result) => (
               <ResourceRow
                 key={result.id}
                 onFlag={() => setFlagId(result.id)}

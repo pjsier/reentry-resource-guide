@@ -1,3 +1,10 @@
+import Fuse from "fuse.js/dist/fuse.basic.esm"
+
+// Array of ZIP codes for resources that should be checked for city-level resources
+import CITY_ZIPS from "./data/city-zips.json"
+// Mapping of ZIP codes to arrays of ZIP codes they overlap for proximity search
+import ZIP_MAP from "./data/zip-map.json"
+
 export const getBasePath = ({ pathname, language }) => {
   if (pathname.startsWith(`/${language}/`)) {
     return pathname.slice(`/${language}`.length)
@@ -5,7 +12,7 @@ export const getBasePath = ({ pathname, language }) => {
   return pathname
 }
 
-export const objectFromSearchParams = params => {
+export const objectFromSearchParams = (params) => {
   const obj = {}
   params.forEach((val, key) => {
     obj[key] = val
@@ -13,11 +20,11 @@ export const objectFromSearchParams = params => {
   return obj
 }
 
-export const fromEntries = iterable => {
+export const fromEntries = (iterable) => {
   return [...iterable].reduce((obj, [key, val]) => {
     obj[key] = val
     return obj
-  })
+  }, {})
 }
 
 export function injectScript(src) {
@@ -39,7 +46,7 @@ export function injectScript(src) {
 // Debounce function from underscore
 export const debounce = (func, wait, immediate) => {
   let timeout
-  return function() {
+  return function () {
     const context = this
     const args = arguments
     const later = () => {
@@ -78,4 +85,88 @@ export function haversine([lon1, lat1], [lon2, lat2]) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
   const d = R * c
   return +kmToMiles(d)
+}
+
+export const sortByLevel = (levelEnum) => (a, b) => {
+  // Sort first by level, but if that's equal prioritize resources without restrictions
+  const levelSort = (levelEnum[a.level] || 10) - (levelEnum[b.level] || 10)
+  return levelSort === 0
+    ? (a.who || []).length - (b.who || []).length
+    : levelSort
+}
+
+export const loadQueryParamFilters = (location, filters) =>
+  fromEntries(
+    Object.entries(objectFromSearchParams(new URLSearchParams(location.search)))
+      .filter(([key, value]) => value !== "" && key in filters)
+      // Ignore non-numbers in initial ZIP query params
+      .filter(([key, value]) => key !== `zip` || !!value.replace(/\D/g, ""))
+      .map(([key, value]) =>
+        Array.isArray(filters[key]) ? [key, value.split(",")] : [key, value]
+      )
+  )
+
+export const getFiltersWithValues = (filters) =>
+  fromEntries(
+    Object.entries(filters).filter(
+      ([key, value]) =>
+        !(Array.isArray(value) && value.length === 0) && value !== ``
+    )
+  )
+
+// TODO: Improve this for checking distance
+const getFilterDistance = (address) =>
+  address.includes("Chicago, IL") ? 2 : 15
+
+export const applyFilters = ({ address, ...filters }, data) => {
+  const filtered = data.filter((d) =>
+    Object.entries(filters).every(([key, value]) => {
+      // Ignore search, apply afterwards to save time
+      if (key === `search`) {
+        return true
+      }
+      if (key === `coords`) {
+        const distanceInMiles = haversine(
+          filters.coords.map((c) => +c),
+          [d.longitude, d.latitude]
+        )
+        return distanceInMiles < getFilterDistance(address)
+      }
+      if (key === `zip` && value.replace(/\D/g, ``) in ZIP_MAP) {
+        const zipVal = value.replace(/\D/g, ``)
+        // Filter out Neighborhood resources if ZIP filtered
+        // Remove City resources if ZIP outside city
+        return (
+          !["City", "Neighborhood"].includes(d.level) ||
+          (d.level === "City" && CITY_ZIPS.includes(zipVal)) ||
+          (!!d[key] &&
+            d.level === "Neighborhood" &&
+            ZIP_MAP[zipVal].some((z) => d[key].includes(z)))
+        )
+      } else if (Array.isArray(value)) {
+        // If data value is array, check for overlap
+        return Array.isArray(d[key])
+          ? d[key].some((v) => value.includes(v))
+          : value.includes(d[key])
+      } else if (typeof value === `string`) {
+        return (d[key] || ``).toLowerCase().includes(value.toLowerCase().trim())
+      }
+      return true
+    })
+  )
+  if (filters.search?.trim()) {
+    return new Fuse(filtered, {
+      minMatchCharLength: 3,
+      shouldSort: true,
+      threshold: 0.3,
+      distance: 500,
+      keys: [`name`, `description`, `descriptiones`, `what`],
+    })
+      .search(filters.search.trim())
+      .map(({ item }) => item)
+  } else if (!!filters.zip) {
+    return filtered.sort(sortByLevel(ZIP_LEVEL_ENUM))
+  } else {
+    return filtered
+  }
 }

@@ -12,7 +12,7 @@ const FilterDescription = ({ filters, count }) => {
       if (key === `search`) {
         return `"${value}"`
       } else {
-        return (Array.isArray(value) ? value : [value]).map(filter =>
+        return (Array.isArray(value) ? value : [value]).map((filter) =>
           intl.formatMessage({ id: filter })
         )
       }

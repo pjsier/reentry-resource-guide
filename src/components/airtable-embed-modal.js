@@ -8,12 +8,12 @@ const AirtableEmbedModal = ({ embedId, title, queryParams, onClose }) => {
   const modalRef = useRef()
 
   useEffect(() => {
-    const escKeyListener = e => {
+    const escKeyListener = (e) => {
       if (e.keyCode === 27) {
         onClose()
       }
     }
-    const docClickListener = e => {
+    const docClickListener = (e) => {
       if (modalRef && !modalRef.current.contains(e.target)) {
         onClose()
       }

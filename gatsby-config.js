@@ -15,8 +15,8 @@ module.exports = {
     reportErrorPath: process.env.REPORT_ERROR_PATH,
   },
   plugins: [
-    `gatsby-plugin-sass`,
-    `gatsby-plugin-react-helmet`,
+    { resolve: `gatsby-plugin-sass` },
+    { resolve: `gatsby-plugin-react-helmet` },
     {
       resolve: `gatsby-plugin-intl`,
       options: {
@@ -44,9 +44,9 @@ module.exports = {
         path: `${__dirname}/src/markdown`,
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-transformer-remark`,
-    `gatsby-plugin-sharp`,
+    { resolve: `gatsby-transformer-sharp` },
+    { resolve: `gatsby-transformer-remark` },
+    { resolve: `gatsby-plugin-sharp` },
     // {
     //   resolve: `gatsby-plugin-web-font-loader`,
     //   options: {
@@ -110,43 +110,43 @@ module.exports = {
         },
       },
     },
-    {
-      resolve: `gatsby-plugin-sitemap`,
-      options: {
-        exclude: [`/embed*`, `/about`],
-        query: `
-        {
-          site {
-            siteMetadata {
-              siteUrl
-            }
-          }
+    // {
+    //   resolve: `gatsby-plugin-sitemap`,
+    //   options: {
+    //     exclude: [`/embed*`, `/about`],
+    //     query: `
+    //     {
+    //       site {
+    //         siteMetadata {
+    //           siteUrl
+    //         }
+    //       }
 
-          allSitePage(filter: {context: {intl: {routed: {eq: false}}}}) {
-            edges {
-              node {
-                path
-              }
-            }
-          }
-        }
-        `,
-        serialize: ({
-          site: {
-            siteMetadata: { siteUrl },
-          },
-          allSitePage,
-        }) =>
-          allSitePage.edges.map(({ node: { path } }) => ({
-            url: `${siteUrl}/en${path}`,
-            changefreq: `daily`,
-            priority: path === `/` ? 1.0 : 0.7,
-            links: languages
-              .filter(lang => lang !== `en`)
-              .map(lang => ({ lang, url: `${siteUrl}/${lang}${path}` })),
-          })),
-      },
-    },
+    //       allSitePage(filter: {context: {intl: {routed: {eq: false}}}}) {
+    //         edges {
+    //           node {
+    //             path
+    //           }
+    //         }
+    //       }
+    //     }
+    //     `,
+    //     serialize: ({
+    //       site: {
+    //         siteMetadata: { siteUrl },
+    //       },
+    //       allSitePage,
+    //     }) =>
+    //       allSitePage.edges.map(({ node: { path } }) => ({
+    //         url: `${siteUrl}/en${path}`,
+    //         changefreq: `daily`,
+    //         priority: path === `/` ? 1.0 : 0.7,
+    //         links: languages
+    //           .filter((lang) => lang !== `en`)
+    //           .map((lang) => ({ lang, url: `${siteUrl}/${lang}${path}` })),
+    //       })),
+    //   },
+    // },
     // `gatsby-plugin-offline`,
   ],
 }

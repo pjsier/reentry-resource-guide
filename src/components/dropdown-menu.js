@@ -7,7 +7,7 @@ const DropdownMenu = ({ label, menuId, classNames, hasChevron, children }) => {
   const dropdownEl = useRef(null)
 
   useEffect(() => {
-    const docClickListener = e => {
+    const docClickListener = (e) => {
       if (
         active === "true" &&
         dropdownEl &&

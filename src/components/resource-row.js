@@ -6,7 +6,7 @@ import { OutboundLink } from "gatsby-plugin-google-gtag"
 
 import { rtlLanguages } from "../constants"
 
-const formatPhone = phone => {
+const formatPhone = (phone) => {
   const phoneStr = phone.replace(/\D/gi, "")
   return phoneStr[0] === "1" ? `+${phoneStr}` : `+1${phoneStr}`
 }
@@ -44,14 +44,14 @@ const ResourceRow = ({
         {(what || []).concat(who || []).length > 0 ? (
           <div className="tag-row">
             {what && what.length > 0
-              ? what.map(t => (
+              ? what.map((t) => (
                   <span key={t} className="tag">
                     {intl.formatMessage({ id: t })}
                   </span>
                 ))
               : ``}
             {who && who.length > 0
-              ? who.map(t => (
+              ? who.map((t) => (
                   <span key={t} className="tag is-teal">
                     {intl.formatMessage({ id: t })}
                   </span>
@@ -147,7 +147,7 @@ const ResourceRow = ({
             <p>
               <FontAwesomeIcon icon="comments" />
               &nbsp;
-              {languages.map(l => intl.formatMessage({ id: l })).join(", ")}
+              {languages.map((l) => intl.formatMessage({ id: l })).join(", ")}
             </p>
           ) : (
             ``

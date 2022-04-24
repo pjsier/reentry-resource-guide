@@ -4,7 +4,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { graphql } from "gatsby"
 
-export const Page = ({ html }) => (
+const Page = ({ html }) => (
   <main className="main container">
     <article>
       <div
@@ -46,7 +46,7 @@ const PageTemplate = ({ location, data }) => (
 export default PageTemplate
 
 export const pageQuery = graphql`
-  query($pageId: String!, $language: String!) {
+  query ($pageId: String!, $language: String!) {
     current: markdownRemark(
       fields: { page: { pageId: { eq: $pageId }, lang: { eq: $language } } }
     ) {

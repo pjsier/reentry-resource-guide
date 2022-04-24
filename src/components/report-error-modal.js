@@ -6,7 +6,7 @@ const ReportErrorModal = ({ reportErrorPath, id, onSuccess, onClose }) => {
   const intl = useIntl()
   const modalRef = useRef()
   const textInput = useRef()
-  const reportResourceError = e => {
+  const reportResourceError = (e) => {
     e.preventDefault()
     fetch(`${reportErrorPath}`, {
       method: "POST",
@@ -18,24 +18,24 @@ const ReportErrorModal = ({ reportErrorPath, id, onSuccess, onClose }) => {
         Notes: textInput.current.value,
       }),
     })
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(() => {
         onClose()
         onSuccess()
       })
-      .catch(err => {
+      .catch((err) => {
         onClose()
         console.error(err)
       })
   }
 
   useEffect(() => {
-    const escKeyListener = e => {
+    const escKeyListener = (e) => {
       if (e.keyCode === 27) {
         onClose()
       }
     }
-    const docClickListener = e => {
+    const docClickListener = (e) => {
       if (modalRef && !modalRef.current.contains(e.target)) {
         onClose()
       }

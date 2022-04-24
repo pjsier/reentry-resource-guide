@@ -44,7 +44,7 @@ const DebouncedInput = ({
       type={inputType}
       value={localValue}
       placeholder={placeholder}
-      onChange={e => setLocalValue(e.target.value)}
+      onChange={(e) => setLocalValue(e.target.value)}
     />
   )
 }

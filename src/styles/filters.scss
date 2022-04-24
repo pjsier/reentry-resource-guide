@@ -112,7 +112,7 @@ label.checkbox {
 input.search {
   padding-left: grid(4);
 
-  & ~ .fa-search {
+  & ~ svg {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);

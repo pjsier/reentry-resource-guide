@@ -16,9 +16,8 @@ import {
   applyFilters,
   loadQueryParamFilters,
   sortByLevel,
-  LEVEL_ENUM,
-  PAGE_SIZE,
-} from "./index"
+} from "../utils"
+import { LEVEL_ENUM, PAGE_SIZE } from "../constants"
 
 const EmbedPage = ({
   location,
@@ -98,7 +97,7 @@ const EmbedPage = ({
             count={results.length}
           />
           <div className="filter-results">
-            {results.slice(0, page * PAGE_SIZE).map(result => (
+            {results.slice(0, page * PAGE_SIZE).map((result) => (
               <ResourceRow
                 key={result.id}
                 onFlag={() => setFlagId(result.id)}

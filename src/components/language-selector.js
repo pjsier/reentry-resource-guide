@@ -35,8 +35,8 @@ const LanguageSelector = ({ location, menuId, classNames }) => {
           classNames={`language-selector ${classNames}`}
         >
           {languages
-            .filter(lang => lang !== language)
-            .map(lang => (
+            .filter((lang) => lang !== language)
+            .map((lang) => (
               <Link
                 key={lang}
                 language={lang}

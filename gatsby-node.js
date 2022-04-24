@@ -92,17 +92,17 @@ exports.createPages = async ({ graphql, actions, getNode }) => {
 }
 
 // Don't load unneeded formatjs formats
-exports.onCreateWebpackConfig = ({ actions }) => {
-  actions.setWebpackConfig({
-    plugins: [
-      new webpack.NormalModuleReplacementPlugin(
-        /@formatjs[/\\]intl-relativetimeformat/,
-        path.resolve(`./src/stub.js`)
-      ),
-      new webpack.NormalModuleReplacementPlugin(
-        /@formatjs[/\\]intl-pluralrules/,
-        path.resolve(`./src/stub.js`)
-      ),
-    ],
-  })
-}
+// exports.onCreateWebpackConfig = ({ actions }) => {
+//   actions.setWebpackConfig({
+//     plugins: [
+//       new webpack.NormalModuleReplacementPlugin(
+//         /@formatjs[/\\]intl-relativetimeformat/,
+//         path.resolve(`./src/stub.js`)
+//       ),
+//       new webpack.NormalModuleReplacementPlugin(
+//         /@formatjs[/\\]intl-pluralrules/,
+//         path.resolve(`./src/stub.js`)
+//       ),
+//     ],
+//   })
+// }

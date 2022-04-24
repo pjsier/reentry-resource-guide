@@ -1,8 +1,8 @@
 import PropTypes from "prop-types"
 import React from "react"
 
-const setupOptions = options =>
-  options.map(option =>
+const setupOptions = (options) =>
+  options.map((option) =>
     typeof option === "string"
       ? { label: option, value: option }
       : { ...option }
@@ -31,7 +31,7 @@ const CheckboxGroup = ({
             onChange={() =>
               onChange(
                 value.includes(val)
-                  ? value.filter(v => v !== val)
+                  ? value.filter((v) => v !== val)
                   : value.concat([val])
               )
             }

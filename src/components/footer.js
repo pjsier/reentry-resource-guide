@@ -15,8 +15,8 @@ const Footer = ({ location, intl }) => (
           <div className="columns">
             <div className="column">
               {languages
-                .filter(lang => lang !== language)
-                .map(lang => (
+                .filter((lang) => lang !== language)
+                .map((lang) => (
                   <p key={lang}>
                     <Link
                       language={lang}
