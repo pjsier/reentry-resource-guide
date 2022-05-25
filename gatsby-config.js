@@ -18,7 +18,7 @@ module.exports = {
     { resolve: `gatsby-plugin-sass` },
     { resolve: `gatsby-plugin-react-helmet` },
     {
-      resolve: `gatsby-plugin-intl`,
+      resolve: `gatsby-plugin-react-intl`,
       options: {
         // language JSON resource path
         path: `${__dirname}/src/intl`,

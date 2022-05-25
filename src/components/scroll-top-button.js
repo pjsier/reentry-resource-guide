@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useIntl } from "gatsby-plugin-intl"
+import { useIntl } from "gatsby-plugin-react-intl"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { DEFAULT_DEBOUNCE } from "../constants"

@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import { graphql } from "gatsby"
-import { useIntl } from "gatsby-plugin-intl"
+import { useIntl } from "gatsby-plugin-react-intl"
 import fromEntries from "object.fromentries"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 

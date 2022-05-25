@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Link, IntlContextConsumer, injectIntl } from "gatsby-plugin-intl"
+import { Link, IntlContextConsumer, injectIntl } from "gatsby-plugin-react-intl"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { languageName } from "../constants"

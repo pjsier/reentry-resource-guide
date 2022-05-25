@@ -2,7 +2,7 @@ import PropTypes from "prop-types"
 import React, { useState } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
-import { Link, useIntl } from "gatsby-plugin-intl"
+import { Link, useIntl } from "gatsby-plugin-react-intl"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import LanguageSelector from "./language-selector"

@@ -202,12 +202,12 @@ a.navbar-item {
   &:hover,
   &:active,
   &:focus {
-    @extend a:hover;
+    @extend a, :hover;
   }
 }
 
 .print-button.navbar-item.is-text {
-  @extend a.navbar-item;
+  @extend a, .navbar-item;
   text-decoration: none;
   height: auto;
   padding: 0 grid(2);

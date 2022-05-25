@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react"
 import PropTypes from "prop-types"
-import { useIntl } from "gatsby-plugin-intl"
+import { useIntl } from "gatsby-plugin-react-intl"
 
 const ReportErrorModal = ({ reportErrorPath, id, onSuccess, onClose }) => {
   const intl = useIntl()

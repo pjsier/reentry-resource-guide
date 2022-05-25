@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import { graphql } from "gatsby"
-import { useIntl } from "gatsby-plugin-intl"
+import { useIntl } from "gatsby-plugin-react-intl"
 import * as pym from "pym.js"
 
 import Layout from "../components/layout"

@@ -1,5 +1,5 @@
 import React from "react"
-import { IntlContextConsumer } from "gatsby-plugin-intl"
+import { IntlContextConsumer } from "gatsby-plugin-react-intl"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { graphql } from "gatsby"

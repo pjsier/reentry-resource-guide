@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
-import { Link, IntlContextConsumer } from "gatsby-plugin-intl"
+import { Link, IntlContextConsumer } from "gatsby-plugin-react-intl"
 
 import { languageName } from "../constants"
 import { getBasePath } from "../utils"

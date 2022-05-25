@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useIntl } from "gatsby-plugin-intl"
+import { useIntl } from "gatsby-plugin-react-intl"
 
 const IntroBanner = () => {
   const intl = useIntl()
