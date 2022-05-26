@@ -98,7 +98,7 @@ export const sortResults = (a, b) => {
   const prioritySort = (a.priority ? 0 : 1) - (b.priority ? 0 : 1)
   if (prioritySort !== 0) return prioritySort
 
-  return getRegionSortValue(a.region) - getRegionSortValue(b.region)
+  return getRegionSortValue(a.region || "") - getRegionSortValue(b.region || "")
 }
 
 // TODO: should this be based on where they're searching or the data?
