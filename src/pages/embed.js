@@ -15,9 +15,9 @@ import {
   getFiltersWithValues,
   applyFilters,
   loadQueryParamFilters,
-  sortByLevel,
+  sortResults,
 } from "../utils"
-import { LEVEL_ENUM, PAGE_SIZE } from "../constants"
+import { PAGE_SIZE } from "../constants"
 
 const EmbedPage = ({
   location,
@@ -43,7 +43,7 @@ const EmbedPage = ({
           id: recordId,
           ...data,
         }))
-        .sort(sortByLevel(LEVEL_ENUM)),
+        .sort(sortResults),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )

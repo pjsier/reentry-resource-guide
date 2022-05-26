@@ -20,11 +20,11 @@ import {
   applyFilters,
   loadQueryParamFilters,
   objectFromSearchParams,
-  sortByLevel,
+  sortResults,
   getFiltersWithValues,
 } from "../utils"
 import { useDebounce } from "../hooks"
-import { PAGE_SIZE, LEVEL_ENUM, DEFAULT_DEBOUNCE } from "../constants"
+import { PAGE_SIZE, DEFAULT_DEBOUNCE } from "../constants"
 
 const updateQueryParams = (filters, removeKeys) => {
   // Retain query params not included in the params we're updating
@@ -114,7 +114,7 @@ const IndexPage = ({
           id: recordId,
           ...data,
         }))
-        .sort(sortByLevel(LEVEL_ENUM)),
+        .sort(sortResults),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
@@ -345,7 +345,10 @@ export const query = graphql`
             address: FullAddress
             zip: ZIP
             description: Description
+            descriptiones: Description_ES
             what: Primary_Category_ies
+            region: Region
+            priority: Priority_resource
             lastUpdated: Last_Updated
             latitude: Latitude
             longitude: Longitude

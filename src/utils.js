@@ -87,12 +87,25 @@ export function haversine([lon1, lat1], [lon2, lat2]) {
   return +kmToMiles(d)
 }
 
-export const sortByLevel = (levelEnum) => (a, b) => {
-  // Sort first by level, but if that's equal prioritize resources without restrictions
-  const levelSort = (levelEnum[a.level] || 10) - (levelEnum[b.level] || 10)
-  return levelSort === 0
-    ? (a.who || []).length - (b.who || []).length
-    : levelSort
+const getRegionSortValue = (region) => {
+  if (region.includes("Chicago") || region.includes("Suburbs")) return 0
+  if (region.includes(" IL") || region.includes(" MO")) return 1
+  if (region === "Statewide") return 2
+  return 3
+}
+
+export const sortResults = (a, b) => {
+  const prioritySort = (a.priority ? 0 : 1) - (b.priority ? 0 : 1)
+  if (prioritySort !== 0) return prioritySort
+
+  return getRegionSortValue(a.region) - getRegionSortValue(b.region)
+}
+
+// TODO: should this be based on where they're searching or the data?
+const getRegionDistanceValue = (region) => {
+  if (region.includes("Chicago") || region.includes("Suburbs")) return 5
+  if (region.includes(" IL") || region.includes(" MO")) return 20
+  return 30
 }
 
 export const loadQueryParamFilters = (location, filters) =>
@@ -109,14 +122,10 @@ export const loadQueryParamFilters = (location, filters) =>
 export const getFiltersWithValues = (filters) =>
   fromEntries(
     Object.entries(filters).filter(
-      ([key, value]) =>
+      ([, value]) =>
         !(Array.isArray(value) && value.length === 0) && value !== ``
     )
   )
-
-// TODO: Improve this for checking distance
-const getFilterDistance = (address) =>
-  address.includes("Chicago, IL") ? 2 : 15
 
 export const applyFilters = ({ address, ...filters }, data) => {
   const filtered = data.filter((d) =>
@@ -130,7 +139,7 @@ export const applyFilters = ({ address, ...filters }, data) => {
           filters.coords.map((c) => +c),
           [d.longitude, d.latitude]
         )
-        return distanceInMiles < getFilterDistance(address)
+        return distanceInMiles < getRegionDistanceValue(d.region || "")
       }
       if (key === `zip` && value.replace(/\D/g, ``) in ZIP_MAP) {
         const zipVal = value.replace(/\D/g, ``)
@@ -164,8 +173,9 @@ export const applyFilters = ({ address, ...filters }, data) => {
     })
       .search(filters.search.trim())
       .map(({ item }) => item)
+    // TODO: this conditional branch needed?
   } else if (!!filters.zip) {
-    return filtered.sort(sortByLevel(ZIP_LEVEL_ENUM))
+    return filtered.sort(sortResults)
   } else {
     return filtered
   }
