@@ -1,10 +1,5 @@
 import Fuse from "fuse.js/dist/fuse.basic.esm"
 
-// Array of ZIP codes for resources that should be checked for city-level resources
-import CITY_ZIPS from "./data/city-zips.json"
-// Mapping of ZIP codes to arrays of ZIP codes they overlap for proximity search
-import ZIP_MAP from "./data/zip-map.json"
-
 export const getBasePath = ({ pathname, language }) => {
   if (pathname.startsWith(`/${language}/`)) {
     return pathname.slice(`/${language}`.length)
@@ -140,18 +135,6 @@ export const applyFilters = ({ address, ...filters }, data) => {
           [d.longitude, d.latitude]
         )
         return distanceInMiles < getRegionDistanceValue(d.region || "")
-      }
-      if (key === `zip` && value.replace(/\D/g, ``) in ZIP_MAP) {
-        const zipVal = value.replace(/\D/g, ``)
-        // Filter out Neighborhood resources if ZIP filtered
-        // Remove City resources if ZIP outside city
-        return (
-          !["City", "Neighborhood"].includes(d.level) ||
-          (d.level === "City" && CITY_ZIPS.includes(zipVal)) ||
-          (!!d[key] &&
-            d.level === "Neighborhood" &&
-            ZIP_MAP[zipVal].some((z) => d[key].includes(z)))
-        )
       } else if (Array.isArray(value)) {
         // If data value is array, check for overlap
         return Array.isArray(d[key])
@@ -173,10 +156,7 @@ export const applyFilters = ({ address, ...filters }, data) => {
     })
       .search(filters.search.trim())
       .map(({ item }) => item)
-    // TODO: this conditional branch needed?
-  } else if (!!filters.zip) {
-    return filtered.sort(sortResults)
   } else {
-    return filtered
+    return filtered.sort(sortResults)
   }
 }
