@@ -32,10 +32,10 @@ const GeocoderInput = ({
       {
         types: ["geocode"],
         bounds: {
-          east: -87.3439,
-          north: 42.2648,
-          south: 41.3621,
-          west: -88.4741,
+          east: -87.494756,
+          north: 42.508481,
+          south: 36.970298,
+          west: -91.513079,
         },
         strictBounds: true,
       }
