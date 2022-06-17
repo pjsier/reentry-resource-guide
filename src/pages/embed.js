@@ -71,9 +71,7 @@ const EmbedPage = ({
   return (
     <Layout location={location} hide>
       <SEO
-        title={`${intl.formatMessage({
-          id: "meta-title",
-        })} | ${intl.formatMessage({ id: "city-bureau" })}`}
+        title={intl.formatMessage({ id: "meta-title" })}
         overrideTitle
         lang={intl.locale}
       />

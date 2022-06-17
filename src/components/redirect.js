@@ -4,9 +4,7 @@ import SEO from "./seo"
 
 const Redirect = ({ intl }) => (
   <SEO
-    title={`${intl.formatMessage({
-      id: "meta-title",
-    })} | ${intl.formatMessage({ id: "city-bureau" })}`}
+    title={intl.formatMessage({ id: "meta-title" })}
     overrideTitle
     lang={intl.locale}
   />

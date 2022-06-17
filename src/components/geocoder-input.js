@@ -40,13 +40,21 @@ const GeocoderInput = ({
         strictBounds: true,
       }
     )
-    autocomplete.setFields(["formatted_address", "geometry"])
+    autocomplete.setFields([
+      "formatted_address",
+      "address_components",
+      "geometry",
+    ])
     autocomplete.addListener("place_changed", () => {
       const place = autocomplete.getPlace()
       const address = place.formatted_address
+      const { short_name: county } = place.address_components.find(
+        ({ types }) => types.includes("administrative_area_level_2")
+      )
       setLocalValue(address)
       onChange({
         address,
+        county,
         lat: place.geometry.location.lat(),
         lon: place.geometry.location.lng(),
       })

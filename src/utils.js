@@ -89,18 +89,17 @@ const getRegionSortValue = (region) => {
   return 3
 }
 
+const getLocationDistanceValue = ({ address, county }) => {
+  if ((address || "").includes("Chicago, ")) return 5
+  if (county === "Cook County") return 20
+  return 30
+}
+
 export const sortResults = (a, b) => {
   const prioritySort = (a.priority ? 0 : 1) - (b.priority ? 0 : 1)
   if (prioritySort !== 0) return prioritySort
 
   return getRegionSortValue(a.region || "") - getRegionSortValue(b.region || "")
-}
-
-// TODO: should this be based on where they're searching or the data?
-const getRegionDistanceValue = (region) => {
-  if (region.includes("Chicago") || region.includes("Suburbs")) return 5
-  if (region.includes(" IL") || region.includes(" MO")) return 20
-  return 30
 }
 
 export const loadQueryParamFilters = (location, filters) =>
@@ -122,7 +121,8 @@ export const getFiltersWithValues = (filters) =>
     )
   )
 
-export const applyFilters = ({ address, ...filters }, data) => {
+export const applyFilters = ({ address, county, ...filters }, data) => {
+  const distanceThreshold = getLocationDistanceValue({ address, county })
   const filtered = data.filter((d) =>
     Object.entries(filters).every(([key, value]) => {
       // Ignore search, apply afterwards to save time
@@ -134,7 +134,13 @@ export const applyFilters = ({ address, ...filters }, data) => {
           filters.coords.map((c) => +c),
           [d.longitude, d.latitude]
         )
-        return distanceInMiles < getRegionDistanceValue(d.region || "")
+        // Allow statewide and national resources when location searched
+        return (
+          distanceInMiles < distanceThreshold ||
+          (d.region || []).some((region) =>
+            ["Statewide", "Nationwide"].includes(region)
+          )
+        )
       } else if (Array.isArray(value)) {
         // If data value is array, check for overlap
         return Array.isArray(d[key])

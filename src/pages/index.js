@@ -104,6 +104,7 @@ const IndexPage = ({
   const defaultFilters = {
     search: ``,
     address: ``,
+    county: ``,
     coords: [],
     what: [],
   }
@@ -178,9 +179,7 @@ const IndexPage = ({
   return (
     <Layout location={location}>
       <SEO
-        title={`${intl.formatMessage({
-          id: "meta-title",
-        })} | ${intl.formatMessage({ id: "city-bureau" })}`}
+        title={intl.formatMessage({ id: "meta-title" })}
         overrideTitle
         lang={intl.locale}
       />
@@ -249,8 +248,13 @@ const IndexPage = ({
                 value={filters.address}
                 placeholder={intl.formatMessage({ id: "address-placeholder" })}
                 googleMapsApiKey={googleMapsApiKey}
-                onChange={({ address, lat, lon }) =>
-                  setFilters({ ...filters, address, coords: [lon, lat] })
+                onChange={({ address, county, lat, lon }) =>
+                  setFilters({
+                    ...filters,
+                    address,
+                    county,
+                    coords: [lon, lat],
+                  })
                 }
               />
             </div>
