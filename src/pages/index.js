@@ -329,6 +329,7 @@ IndexPage.propTypes = {
 }
 
 // TODO: Re-add email, hours, description_es, qualifications, level, languages
+// TODO: priority: Priority_resource
 export const query = graphql`
   query {
     site {
@@ -352,7 +353,6 @@ export const query = graphql`
             descriptiones: Description_ES
             what: Primary_Category_ies
             region: Region
-            priority: Priority_resource
             lastUpdated: Last_Updated
             latitude: Latitude
             longitude: Longitude
