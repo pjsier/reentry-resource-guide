@@ -37,7 +37,7 @@
     "gatsby-plugin-web-font-loader": "^1.0.4",
     "gatsby-source-airtable": "^2.3.0",
     "gatsby-source-filesystem": "^4.15.0",
-    "gatsby-transformer-remark": "^5.15.0",
+    "gatsby-transformer-remark": "^5.25.1",
     "gatsby-transformer-sharp": "^4.15.0",
     "node-sass": "^7.0.0",
     "object.fromentries": "^2.0.5",
