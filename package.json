@@ -52,15 +52,18 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.17.12",
+    "@parcel/watcher-linux-x64-glibc": "^2.5.0",
     "eslint": "^8.16.0",
     "eslint-config-react-app": "^7.0.1",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.27",
-    "postcss": "^8.4.14",
-    "prettier": "^2.6.2",
     "nan": "2.18.0",
-    "node-gyp": "^10.0.1"
+    "node-gyp": "^10.0.1",
+    "postcss": "^8.4.14",
+    "prettier": "^2.6.2"
   },
-  "resolutions": {"nan": "2.18.0"},
+  "resolutions": {
+    "nan": "2.18.0"
+  },
   "license": "MIT",
   "browserslist": [
     ">0.5%",
