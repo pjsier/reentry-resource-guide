@@ -33,7 +33,7 @@ jobs:
 
       - uses: actions/setup-node@v1
         with:
-          node-version: "21.x"
+          node-version: "17.x"
 
       - run: npm ci --prefer-offline --no-audit --no-optional
 

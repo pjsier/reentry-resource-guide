@@ -56,8 +56,11 @@
     "eslint-config-react-app": "^7.0.1",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.27",
     "postcss": "^8.4.14",
-    "prettier": "^2.6.2"
+    "prettier": "^2.6.2",
+    "nan": "2.18.0",
+    "node-gyp": "^10.0.1"
   },
+  "resolutions": {"nan": "2.18.0"},
   "license": "MIT",
   "browserslist": [
     ">0.5%",
