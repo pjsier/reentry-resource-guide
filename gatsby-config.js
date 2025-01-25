@@ -93,23 +93,6 @@ module.exports = {
         icon: `src/images/icon.png`,
       },
     },
-    {
-      resolve: `gatsby-plugin-robots-txt`,
-      options: {
-        resolveEnv: () =>
-          siteUrl.includes(`staging`) ? `development` : `production`,
-        env: {
-          development: {
-            policy: [{ userAgent: "*", disallow: ["/"] }],
-            sitemap: null,
-            host: null,
-          },
-          production: {
-            policy: [{ userAgent: "*", disallow: [""] }],
-          },
-        },
-      },
-    },
     // {
     //   resolve: `gatsby-plugin-sitemap`,
     //   options: {
