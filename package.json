@@ -17,6 +17,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
+    "ajv": "^8.17.1",
     "bulma": "^0.8.2",
     "custom-event-polyfill": "^1.0.7",
     "dotenv": "^16.0.1",
