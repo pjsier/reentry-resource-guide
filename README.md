@@ -1,4 +1,4 @@
-# Education Justice Project Re-Entry Resource Guide
+# Education Justice Project Reentry Resource Guide
 
 ## Setup
 

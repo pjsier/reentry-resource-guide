@@ -6,7 +6,7 @@ const languages = [`en`, `es`]
 
 module.exports = {
   siteMetadata: {
-    title: `Illinois Re-Entry Resources`,
+    title: `Illinois Reentry Resources`,
     siteUrl,
     author: `Education Justice Project`,
     twitterAuthor: ``,
@@ -84,8 +84,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Illinois Re-Entry Resource Guide`,
-        short_name: `Re-Entry Resources`,
+        name: `Illinois Reentry Resource Guide`,
+        short_name: `Reentry Resources`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#ffffff`,

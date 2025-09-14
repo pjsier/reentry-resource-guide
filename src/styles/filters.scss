@@ -5,6 +5,21 @@
   padding: 0;
 }
 
+.filter-banner {
+  background-color: #224872;
+  color: $white;
+  display: flex;
+  flex-direction: row;
+  padding: 16px;
+
+  img {
+    margin-right: 16px;
+    height: auto;
+    max-width: 200px;
+    align-self: center;
+  }
+}
+
 .filter-controls,
 .filter-results-section {
   flex-grow: 1;
@@ -26,6 +41,16 @@
 }
 
 @media screen and (max-width: $tablet) {
+  .filter-banner {
+    flex-wrap: wrap;
+
+    img {
+      margin-right: 0;
+      margin: auto;
+      margin-bottom: 16px;
+    }
+  }
+
   .filter-container {
     flex-direction: column;
   }

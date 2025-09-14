@@ -8,9 +8,9 @@ import { rtlLanguages } from "../constants"
 function SEO({ description, lang, meta, title, overrideTitle }) {
   const {
     site: { siteMetadata },
-    socialImage: {
-      childImageSharp: { fixed: socialImg },
-    },
+    // socialImage: {
+    //   childImageSharp: { fixed: socialImg },
+    // },
   } = useStaticQuery(
     graphql`
       query {
@@ -19,13 +19,6 @@ function SEO({ description, lang, meta, title, overrideTitle }) {
             author
             twitterAuthor
             siteUrl
-          }
-        }
-        socialImage: file(relativePath: { eq: "social.jpg" }) {
-          childImageSharp {
-            fixed(width: 1023) {
-              ...GatsbyImageSharpFixed
-            }
           }
         }
       }
@@ -70,46 +63,46 @@ function SEO({ description, lang, meta, title, overrideTitle }) {
           property: `og:type`,
           content: `website`,
         },
-        {
-          property: `og:image`,
-          content: `${siteMetadata.siteUrl}${socialImg.src}`,
-        },
-        {
-          property: `og:image:width`,
-          content: socialImg.width,
-        },
-        {
-          property: `og:image:height`,
-          content: socialImg.height,
-        },
-        {
-          property: `og:image:alt`,
-          content: intl.formatMessage({ id: "logo-alt" }),
-        },
-        {
-          name: `twitter:card`,
-          content: `summary_large_image`,
-        },
-        {
-          name: `twitter:creator`,
-          content: siteMetadata.twitterAuthor,
-        },
-        {
-          name: `twitter:title`,
-          content: title,
-        },
-        {
-          name: `twitter:description`,
-          content: metaDescription,
-        },
-        {
-          name: `twitter:image:src`,
-          content: `${siteMetadata.siteUrl}${socialImg.src}`,
-        },
-        {
-          property: `twitter:image:alt`,
-          content: intl.formatMessage({ id: "logo-alt" }),
-        },
+        // {
+        //   property: `og:image`,
+        //   content: `${siteMetadata.siteUrl}${socialImg.src}`,
+        // },
+        // {
+        //   property: `og:image:width`,
+        //   content: socialImg.width,
+        // },
+        // {
+        //   property: `og:image:height`,
+        //   content: socialImg.height,
+        // },
+        // {
+        //   property: `og:image:alt`,
+        //   content: intl.formatMessage({ id: "logo-alt" }),
+        // },
+        // {
+        //   name: `twitter:card`,
+        //   content: `summary_large_image`,
+        // },
+        // {
+        //   name: `twitter:creator`,
+        //   content: siteMetadata.twitterAuthor,
+        // },
+        // {
+        //   name: `twitter:title`,
+        //   content: title,
+        // },
+        // {
+        //   name: `twitter:description`,
+        //   content: metaDescription,
+        // },
+        // {
+        //   name: `twitter:image:src`,
+        //   content: `${siteMetadata.siteUrl}${socialImg.src}`,
+        // },
+        // {
+        //   property: `twitter:image:alt`,
+        //   content: intl.formatMessage({ id: "logo-alt" }),
+        // },
       ].concat(meta)}
     />
   )

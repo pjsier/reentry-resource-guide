@@ -4,6 +4,7 @@ import { graphql } from "gatsby"
 import { useIntl } from "gatsby-plugin-react-intl"
 import fromEntries from "object.fromentries"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import EjpImage from "../images/ejp.png"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -291,6 +292,19 @@ const IndexPage = ({
           <ScrollTopButton />
         </aside>
         <div className="section filter-results-section">
+          <section className="filter-banner">
+            <img src={EjpImage} alt="EJP logo" />
+            <p>
+              The Illinois Reentry Resources database is a comprehensive, online
+              directory designed to connect formerly-incarcerated individuals
+              across Illinois with essential services and support. Whether
+              you're searching for housing assistance, employment opportunities,
+              food programs, healthcare, legal aid, or other vital resources,
+              this easy-to-use platform helps you find what you need. Search by
+              location, category, or keyword to access up-to-date listings from
+              trusted local organizations.
+            </p>
+          </section>
           <FilterDescription
             filters={getFiltersWithValues(debounceFilters)}
             count={results.length}

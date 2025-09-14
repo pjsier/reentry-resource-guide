@@ -37,6 +37,7 @@ const ResourceRow = ({
     !!props[`description${intl.locale}`] && rtlLanguages.includes(intl.locale)
       ? `rtl`
       : `ltr`
+  const cleanAddress = address.replace(", ,", "").trim()
 
   return (
     <div className="resource-row columns is-multiline">
@@ -116,17 +117,17 @@ const ResourceRow = ({
         ) : (
           ``
         )}
-        {address ? (
+        {cleanAddress ? (
           <p className="has-link">
             <OutboundLink
               target="_blank"
               rel="noopener noreferrer"
               href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-                address
+                cleanAddress
               )}`}
             >
               <FontAwesomeIcon icon="map-marker-alt" />
-              &nbsp; {address}
+              &nbsp; {cleanAddress}
             </OutboundLink>
           </p>
         ) : (
@@ -141,7 +142,7 @@ const ResourceRow = ({
           ``
         )}
       </div>
-      <div className="column is-8 bottom-column">
+      <div className="column is-12 bottom-column">
         <div>
           {languages && languages.length > 0 ? (
             <p>
@@ -169,19 +170,6 @@ const ResourceRow = ({
               day: "numeric",
             })}
           </p>
-        </div>
-      </div>
-      <div className="column is-4 bottom-column">
-        <div>
-          <button
-            type="button"
-            className="button is-text flag-resource"
-            onClick={onFlag}
-          >
-            <FontAwesomeIcon icon="exclamation-circle" />
-            &nbsp;{" "}
-            <span>{intl.formatMessage({ id: "flag-resource-label" })}</span>
-          </button>
         </div>
       </div>
     </div>
