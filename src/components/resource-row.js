@@ -37,7 +37,7 @@ const ResourceRow = ({
     !!props[`description${intl.locale}`] && rtlLanguages.includes(intl.locale)
       ? `rtl`
       : `ltr`
-  const cleanAddress = address.replace(", ,", "").trim()
+  const cleanAddress = (address || "").replace(", ,", "").trim()
 
   return (
     <div className="resource-row columns is-multiline">
